@@ -1,0 +1,78 @@
+.text-primary{
+	color:#FA0701 !important
+}
+.switcher-input:checked ~ .switcher-indicator{
+	background: rgba(250, 7, 1, 0.5)
+}
+.switcher-input:checked ~ .switcher-indicator::after{
+	background: #FA0701 !important;
+}
+.page-item.active .page-link, .page-item.active .page-link:hover, .page-item.active .page-link:focus, .pagination li.active > a:not(.page-link), .pagination li.active > a:not(.page-link):hover, .pagination li.active > a:not(.page-link):focus{
+	background: #FA0701 !important;
+	border-color: #FA0701 !important;
+}
+.btn-primary{
+	background: #FA0701 !important;
+}
+.nav-tabs .nav-link{
+	background-image: linear-gradient(#FA0701, rgba(250, 7, 1, 0.5));
+}
+.form-control:focus{
+	border-color: #FA0701;
+	box-shadow: 0 -1px 0 0 #FA0701 inset;
+}
+nav.red-bg-nav{
+	background-color: #FA0701 !important;
+}
+nav.red-bg-nav *,
+.navbar-search-input .form-control::placeholder{
+	color: #fff !important;
+}
+nav.red-bg-nav .dropdown-menu *{
+	color: #4E5155 !important;
+}
+.sidenav, .sidenav-inner, .sidenav-item, .sidenav.bg-dark .sidenav-item.active > .sidenav-link:not(.sidenav-toggle), .app-brand, #layout-sidenav{
+	background-color: #000 !important;
+}
+.display-1{
+	color: #FA0701 !important;
+}
+.table td, .table th{
+	white-space: initial !important;
+}
+.spaced-card{
+	margin: 20px !important;
+}
+.card-header-flex{
+	display: flex;
+	-webkit-display: flex;
+	align-items: center;
+	-webkit-box-align: center;
+}
+.card-header-flex h6{
+	width: 100%;
+	margin-bottom: 0;
+}
+.card-header-flex div{
+	width: auto;
+}
+.card-header-flex .flex-right-button{
+	display: flex;
+	justify-content: space-between;
+}
+.card-header-flex .flex-right-button a{
+	margin-left: 15px;
+}
+.inquiry-list-filter select,
+.inquiry-list-filter button{
+	margin-right: 20px !important;
+}
+.inquiry-list-filter select{
+	font-size: 14px;
+	width: 180px
+}
+@media screen and (max-width: 992px){
+	.hide-on-mobile{
+		display: none !important;
+	}
+}
