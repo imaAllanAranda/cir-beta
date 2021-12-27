@@ -371,4 +371,64 @@ class Admin extends CI_Controller
     public function delete_cir(){
         return $this->admin_model->delete_cir() ? 1 : 0;
     }
+
+    public function generatepdf(){
+        $data['name'] =  $_GET['name'];
+        $data['type'] = $_GET['type'];
+        $data['qty'] = $_GET['qty'];
+        $data['price'] = $_GET['price'];
+        $data['email'] = $_GET['email'];
+        $data['contact'] = $_GET['contact'];
+        $data['note'] = $_GET['note'];
+
+        $mpdf = new \Mpdf\Mpdf();
+        $final = $this->load->view('admin/quotation',$data,true);
+        $mpdf->AddPage('P');
+        $mpdf->WriteHTML($final);
+
+        $mpdf->Output('Quotation.pdf', 'I');
+
+       if($_GET['sendEmail'] == 1){
+
+        $content = $mpdf->Output('', 'S'); 
+
+        $attachment = (new Swift_Attachment($content, 'Nzoia Price Quotation', 'application/pdf'));
+
+
+        $message = new Swift_Message();
+        $message->setSubject('Nzoia Price Quotation');
+
+        $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
+        $message->setTo($_GET['email']);
+
+        $message->setBody('Please see attached file of Price Quotation');
+
+        $message->attach($attachment);
+
+        if ($_ENV['MAIL_BCC']) {
+            $bcc = [];
+
+            $mails = explode(';', $_ENV['MAIL_BCC']);
+
+            foreach ($mails as $mail) {
+                $parts = explode(',', $mail);
+
+                $bcc[$parts[0]] = $parts[1];
+            }
+
+            $message->setBcc($bcc);
+        }
+
+        $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
+            ->setUsername($_ENV['MAIL_USERNAME'])
+            ->setPassword($_ENV['MAIL_PASSWORD']);
+
+        // Create the Mailer using your created Transport
+        $mailer = new Swift_Mailer($transport);
+
+        // Send the created message
+        $isSent = $mailer->send($message);      
+       }
+  
+    }
 }
