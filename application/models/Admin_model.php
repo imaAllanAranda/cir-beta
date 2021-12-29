@@ -16,7 +16,7 @@ class Admin_model extends CI_Model
     }
 
     public function report_history(){
-        
+
         $adviser_id = $_GET['adviser_id'];
         $date_from = $_GET['date_from'];
         $date_to = $_GET['date_to'];
@@ -50,7 +50,7 @@ class Admin_model extends CI_Model
         }      
     }
 
-   
+
 
     public function adviser_list()
     {
@@ -66,7 +66,7 @@ class Admin_model extends CI_Model
         }
     }
 
-     public function admin_adviser()
+    public function admin_adviser()
     {
         $type = array('Staff','Management');
         $this->db->select('*')->from('advisers');
@@ -107,14 +107,14 @@ class Admin_model extends CI_Model
         $link_password = $this->generateRandomString();
         
         $data = array(
-                'report_number' => $this->input->post('report_number'),
-                'send_date' => $this->input->post('send_date'),
-                'due_date' => $this->input->post('due_date'),
-                'investigation_information' => $this->input->post('investigation_information'),
-                'adviser_id' => $this->input->post('adviser_id'),
-                'link_password' => $link_password,
-                'representative_id' => $this->input->post('representative_id'),
-                'type' =>  $this->input->post('type'),
+            'report_number' => $this->input->post('report_number'),
+            'send_date' => $this->input->post('send_date'),
+            'due_date' => $this->input->post('due_date'),
+            'investigation_information' => $this->input->post('investigation_information'),
+            'adviser_id' => $this->input->post('adviser_id'),
+            'link_password' => $link_password,
+            'representative_id' => $this->input->post('representative_id'),
+            'type' =>  $this->input->post('type'),
         ); 
 
         $res = $this->db->insert('ta_cir', $data);
@@ -173,17 +173,17 @@ class Admin_model extends CI_Model
         $link = base_url() . 'admin/provide_password?report_number=' . $uid . '&user_type=1&type=' .$type;
 
         $bodyMessage = '
-Hi '.$text.' ' . $adviser_name . ',
+        Hi '.$text.' ' . $adviser_name . ',
 
-Please be informed that a '.$system.' is being lodged by Eliteinsure representative. We will need your cooperation to complete the investigation. 
+        Please be informed that a '.$system.' is being lodged by Eliteinsure representative. We will need your cooperation to complete the investigation. 
 
-Kindly click the link below to answer questions from the company representative: 
+        Kindly click the link below to answer questions from the company representative: 
 
-' . $link . '
+        ' . $link . '
 
-Link Password: ' . $link_password . '
+        Link Password: ' . $link_password . '
 
-Eliteinsure Admin Team';
+        Eliteinsure Admin Team';
 
         $this->sendEmail($subject, $email, $link_password, $link, $adviser_name, $bodyMessage);
 
@@ -301,7 +301,7 @@ Eliteinsure Admin Team';
         $adviser_name = $data['name'];
 
 
-      if($type == 0){
+        if($type == 0){
             $text = "";
             $subject = "Incident Report(IR2021".$textReportNum.")";
             $system = "Incident Report";
@@ -317,16 +317,16 @@ Eliteinsure Admin Team';
             $system = "Compliance Investigation Report";
         }
 
-           $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
+        $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
 
         $bodyMessage = '
-Dear Eliteinsure Representative,
-    
-'.$user.' subject to Report Number '.$number.'' . $textReportNum . ' has replied to your questions. Please click the link below to continue the investigation. 
+        Dear Eliteinsure Representative,
 
-' . $link . '
+        '.$user.' subject to Report Number '.$number.'' . $textReportNum . ' has replied to your questions. Please click the link below to continue the investigation. 
 
-Eliteinsure Admin Team';
+        ' . $link . '
+
+        Eliteinsure Admin Team';
 
         $this->sendEmail($subject,$email, '', $link, $adviser_name, $bodyMessage);
 
@@ -389,15 +389,15 @@ Eliteinsure Admin Team';
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=1&type='.$type;
 
         $bodyMessage = '
-Dear '.$adviser_name.',
+        Dear '.$adviser_name.',
         
-In reference to '.$system.' no. '.$number.'' . $textReportNum . ' being conducted, please click the link below and provide your response.  
+        In reference to '.$system.' no. '.$number.'' . $textReportNum . ' being conducted, please click the link below and provide your response.  
 
-' . $link . '
+        ' . $link . '
 
-Link Password: ' . $link_password . '
+        Link Password: ' . $link_password . '
 
-Eliteinsure Admin Team';
+        Eliteinsure Admin Team';
 
         $this->sendEmail($subject,$email, $link_password, $link, $adviser_name, $bodyMessage);
 
@@ -460,15 +460,15 @@ Eliteinsure Admin Team';
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
 
         $bodyMessage = '
-Dear Eliteinsure Representative,
-    
-'.$user.' subject to Report Number '.$number.'' . $textReportNum . ' has replied to your questions. Please click the link below to continue the investigation. 
+        Dear Eliteinsure Representative,
 
-' . $link . '
+        '.$user.' subject to Report Number '.$number.'' . $textReportNum . ' has replied to your questions. Please click the link below to continue the investigation. 
 
-Eliteinsure Admin Team';
+        ' . $link . '
 
-       $this->sendEmail($subject,$email, '', $link, $adviser_name, $bodyMessage);
+        Eliteinsure Admin Team';
+
+        $this->sendEmail($subject,$email, '', $link, $adviser_name, $bodyMessage);
 
         $data = array('access_status' => 0);
         $this->db->where('report_number', $this->input->post('report_number'));
@@ -486,9 +486,12 @@ Eliteinsure Admin Team';
         $finalisation = $this->input->post('finalisation');
         $signature = $this->input->post('signature');
 
+        $points = $this->input->post('points');
+
         $data = array(
             'rep_action' => $action_response,
             'satisfactory' => $satisfactorily,
+            'points' => $points,
             'if_not' => $if_not,
             'finalisation' => $finalisation,
             'rep_signature' => $signature,
@@ -569,8 +572,8 @@ Eliteinsure Admin Team';
         }
 
         $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
-            ->setUsername($_ENV['MAIL_USERNAME'])
-            ->setPassword($_ENV['MAIL_PASSWORD']);
+        ->setUsername($_ENV['MAIL_USERNAME'])
+        ->setPassword($_ENV['MAIL_PASSWORD']);
 
         // Create the Mailer using your created Transport
         $mailer = new Swift_Mailer($transport);
@@ -629,7 +632,7 @@ Eliteinsure Admin Team';
         $this->db->where('token', $token);
         $this->db->where('token', $token);
 
-       
+
 
         $type = $_GET['type'];
 
@@ -638,7 +641,7 @@ Eliteinsure Admin Team';
         $id = $data['tokenable_id'];
         $role = $data['role'];
 
-        $this->db->select('lpad(a.report_number,4,"0") as report_number,a.adviser_id,a.type ,a.send_date,a.due_date,a.representative_id,a.report_number as id,a.status,b.name,c.name as adv_name')->from('ta_cir a');
+        $this->db->select('lpad(a.report_number,4,"0") as report_number,a.adviser_id,a.type ,a.send_date,a.due_date,a.representative_id,a.report_number as id,a.status,b.name,c.name as adv_name, a.points')->from('ta_cir a');
         $this->db->join('users b', 'b.id = a.representative_id', 'left');
         $this->db->join('advisers c', 'c.id = a.adviser_id', 'left');
         $this->db->where('report_number !=', '0');
