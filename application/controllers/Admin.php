@@ -34,9 +34,9 @@ class Admin extends CI_Controller
 
             if (1 == $token) {
                 $data['adviser_list'] = $this->admin_model->adviser_list();
-               
+                
                 $data['admin_adviser'] = $this->admin_model->admin_adviser();
-         
+                
                 $data['report_number'] = $this->admin_model->report_number();
                 $data['access_token'] = $_GET['token'];
                 $data['user_details'] = $this->admin_model->getUserID($_GET['token']);
@@ -80,18 +80,18 @@ class Admin extends CI_Controller
        // $print_r($data);
        // // print_r($data['report'][1]['name']);
 
-          $htmlFooter = '
-          <p style="font-size:9px;; text-align: justify; font-family: calibri;">Disclaimer: Eliteinsure has used reasonable endeavours to ensure the accuracy and completeness of the information provided but makes no warranties as to the accuracy or completeness of such information. The information should not be taken as advice. Eliteinsure accepts no responsibility for the results of any omissions or actions taken on basis of this information. This report includes commercially sensitive information. Accordingly, it may be used for the purpose provided; may not be disclosed to any third party; and will be subject to any obligation of confidence owed by the recipient under contract or otherwise.</p><footer>
-              <div class="footer" style="font-size:6pt;">
-                <img src="assets/admin/img/logo.png" alt="eliteinsure" class="logo" width="200"/>
-                <div style="margin-left:520px; margin-top:-15px;" >
-                <a style="font-size:11px;" href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
-                        www.eliteinsure.co.nz
-                    </a>&nbsp;|&nbsp;Page
-                    {PAGENO}
-                </div>
-              </div>
-            </footer>';
+        $htmlFooter = '
+        <p style="font-size:9px;; text-align: justify; font-family: calibri;">Disclaimer: Eliteinsure has used reasonable endeavours to ensure the accuracy and completeness of the information provided but makes no warranties as to the accuracy or completeness of such information. The information should not be taken as advice. Eliteinsure accepts no responsibility for the results of any omissions or actions taken on basis of this information. This report includes commercially sensitive information. Accordingly, it may be used for the purpose provided; may not be disclosed to any third party; and will be subject to any obligation of confidence owed by the recipient under contract or otherwise.</p><footer>
+        <div class="footer" style="font-size:6pt;">
+        <img src="assets/admin/img/logo.png" alt="eliteinsure" class="logo" width="200"/>
+        <div style="margin-left:520px; margin-top:-15px;" >
+        <a style="font-size:11px;" href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
+        www.eliteinsure.co.nz
+        </a>&nbsp;|&nbsp;Page
+        {PAGENO}
+        </div>
+        </div>
+        </footer>';
 
         $mpdf = new \Mpdf\Mpdf();
         $report = $this->load->view('admin/report_history', $data, true);
@@ -174,7 +174,7 @@ class Admin extends CI_Controller
         $data['comp_rep'] = $this->admin_model->comp_rep($_GET['report_number']);
         $data['cir_max'] = $this->admin_model->cir_max();
 
-         $this->load->view('admin/report',$data);
+        $this->load->view('admin/report',$data);
     }
 
     public function Compliance_Report()
@@ -190,17 +190,17 @@ class Admin extends CI_Controller
         $data['comp_rep'] = $this->admin_model->comp_rep($_GET['report_number']);
 
         $htmlFooter = '
-            <footer>
-              <div class="footer" style="font-size:6pt;">
-                <img src="assets/admin/img/logo.png" alt="eliteinsure" class="logo" width="200"/>
-                <div style="margin-left:520px; margin-top:-15px;" >
-                <a style="font-size:11px;" href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
-                        www.eliteinsure.co.nz
-                    </a>&nbsp;|&nbsp;Page
-                    {PAGENO}
-                </div>
-              </div>
-            </footer>';
+        <footer>
+        <div class="footer" style="font-size:6pt;">
+        <img src="assets/admin/img/logo.png" alt="eliteinsure" class="logo" width="200"/>
+        <div style="margin-left:520px; margin-top:-15px;" >
+        <a style="font-size:11px;" href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
+        www.eliteinsure.co.nz
+        </a>&nbsp;|&nbsp;Page
+        {PAGENO}
+        </div>
+        </div>
+        </footer>';
 
         $mpdf = new \Mpdf\Mpdf();
         $cirtemplate = $this->load->view('admin/cirtemplate', $data, true);
@@ -242,153 +242,153 @@ class Admin extends CI_Controller
         if (1 == $_GET['download']) {
             $mpdf->Output('Report.pdf', 'D');
         } else {
-             $mpdf->SetHTMLFooter($htmlFooter);
-            $mpdf->Output();
-        }
-    }
+           $mpdf->SetHTMLFooter($htmlFooter);
+           $mpdf->Output();
+       }
+   }
 
-    public function send_to_director()
-    {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
-        $_GET['report_number'] = $this->input->post('report_number');
+   public function send_to_director()
+   {
+    $_SERVER['REQUEST_METHOD'] = 'GET';
+    $_GET['report_number'] = $this->input->post('report_number');
         //$type = $this->input->post('type');
 
-        $data['report_details_cir'] = $this->admin_model->report_details();
-        $data['report_details_identified'] = $this->admin_model->report_details_identified();
-        $data['report_details_address'] = $this->admin_model->report_details_address();
-        $data['reportHistory'] = $this->admin_model->reportHistory($_GET['report_number']);
-        $data['cir_max'] = $this->admin_model->cir_max();
-        $data['comp_rep'] = $this->admin_model->comp_rep($_GET['report_number']);
+    $data['report_details_cir'] = $this->admin_model->report_details();
+    $data['report_details_identified'] = $this->admin_model->report_details_identified();
+    $data['report_details_address'] = $this->admin_model->report_details_address();
+    $data['reportHistory'] = $this->admin_model->reportHistory($_GET['report_number']);
+    $data['cir_max'] = $this->admin_model->cir_max();
+    $data['comp_rep'] = $this->admin_model->comp_rep($_GET['report_number']);
 
-           $htmlFooter = '
-            <footer>
-              <div class="footer" style="font-size:6pt;">
-                <img src="assets/admin/img/logo.png" alt="eliteinsure" class="logo" width="200"/>
-                <div style="margin-left:520px; margin-top:-15px;" >
-                <a style="font-size:11px;" href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
-                        www.eliteinsure.co.nz
-                    </a>&nbsp;|&nbsp;Page
-                    {PAGENO}
-                </div>
-              </div>
-            </footer>';
+    $htmlFooter = '
+    <footer>
+    <div class="footer" style="font-size:6pt;">
+    <img src="assets/admin/img/logo.png" alt="eliteinsure" class="logo" width="200"/>
+    <div style="margin-left:520px; margin-top:-15px;" >
+    <a style="font-size:11px;" href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
+    www.eliteinsure.co.nz
+    </a>&nbsp;|&nbsp;Page
+    {PAGENO}
+    </div>
+    </div>
+    </footer>';
 
-        $mpdf = new \Mpdf\Mpdf();
-        $cirtemplate = $this->load->view('admin/cirtemplate', $data, true);
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->WriteHTML($cirtemplate);
+    $mpdf = new \Mpdf\Mpdf();
+    $cirtemplate = $this->load->view('admin/cirtemplate', $data, true);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->WriteHTML($cirtemplate);
 
-        $addresstemplate = $this->load->view('admin/addresstemplate', $data, true);
+    $addresstemplate = $this->load->view('admin/addresstemplate', $data, true);
 
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($addresstemplate);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($addresstemplate);
 
-        $representative = $this->load->view('admin/representative', $data, true);
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($representative);
+    $representative = $this->load->view('admin/representative', $data, true);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($representative);
 
-        $adviserresponse = $this->load->view('admin/adviserresponse', $data, true);
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($adviserresponse);
+    $adviserresponse = $this->load->view('admin/adviserresponse', $data, true);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($adviserresponse);
 
-        $actionresponse = $this->load->view('admin/actionresponse', $data, true);
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($actionresponse);
+    $actionresponse = $this->load->view('admin/actionresponse', $data, true);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($actionresponse);
 
-        $followup = $this->load->view('admin/followup', $data, true);
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($followup);
+    $followup = $this->load->view('admin/followup', $data, true);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($followup);
 
-        $final = $this->load->view('admin/finalisation', $data, true);
-        $mpdf->SetHTMLFooter($htmlFooter);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($final);
+    $final = $this->load->view('admin/finalisation', $data, true);
+    $mpdf->SetHTMLFooter($htmlFooter);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($final);
 
-        $content = $mpdf->Output('', 'S');
+    $content = $mpdf->Output('', 'S');
 
-        $this->db->select('*')->from('ta_cir');
-        $this->db->where('report_number', $this->input->post('report_number'));
+    $this->db->select('*')->from('ta_cir');
+    $this->db->where('report_number', $this->input->post('report_number'));
 
-        $query1 = $this->db->get();
-        $data = $query1->row_array();
-        $type = $data['type'];
+    $query1 = $this->db->get();
+    $data = $query1->row_array();
+    $type = $data['type'];
 
-        if($type == 0){
-            $subject = "IR";
-        }else{
-            $subject = "CIR";
+    if($type == 0){
+        $subject = "IR";
+    }else{
+        $subject = "CIR";
+    }
+
+    $attachment = (new Swift_Attachment($content, $subject, 'application/pdf'));
+
+
+    $message = new Swift_Message();
+    $message->setSubject($subject);
+
+    $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
+    $message->setTo('allanaranda4@gmail.com');
+
+    $message->setBcc(array('allanaranda4@gmail.com' => 'Admin'));
+
+    $message->setBody('Please see attached file for '.$subject.'');
+
+    $message->attach($attachment);
+
+    if ($_ENV['MAIL_BCC']) {
+        $bcc = [];
+
+        $mails = explode(';', $_ENV['MAIL_BCC']);
+
+        foreach ($mails as $mail) {
+            $parts = explode(',', $mail);
+
+            $bcc[$parts[0]] = $parts[1];
         }
 
-        $attachment = (new Swift_Attachment($content, $subject, 'application/pdf'));
+        $message->setBcc($bcc);
+    }
 
-
-        $message = new Swift_Message();
-        $message->setSubject($subject);
-
-        $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
-        $message->setTo('allanaranda4@gmail.com');
-
-        $message->setBcc(array('allanaranda4@gmail.com' => 'Admin'));
-
-        $message->setBody('Please see attached file for '.$subject.'');
-
-        $message->attach($attachment);
-
-        if ($_ENV['MAIL_BCC']) {
-            $bcc = [];
-
-            $mails = explode(';', $_ENV['MAIL_BCC']);
-
-            foreach ($mails as $mail) {
-                $parts = explode(',', $mail);
-
-                $bcc[$parts[0]] = $parts[1];
-            }
-
-            $message->setBcc($bcc);
-        }
-
-        $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
-            ->setUsername($_ENV['MAIL_USERNAME'])
-            ->setPassword($_ENV['MAIL_PASSWORD']);
+    $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
+    ->setUsername($_ENV['MAIL_USERNAME'])
+    ->setPassword($_ENV['MAIL_PASSWORD']);
 
         // Create the Mailer using your created Transport
-        $mailer = new Swift_Mailer($transport);
+    $mailer = new Swift_Mailer($transport);
 
         // Send the created message
-        $isSent = $mailer->send($message);
-    }
+    $isSent = $mailer->send($message);
+}
 
-    public function checkToken($token)
-    {
-        return $this->admin_model->checkToken($token) ? 1 : 0;
-    }
-    public function delete_cir(){
-        return $this->admin_model->delete_cir() ? 1 : 0;
-    }
+public function checkToken($token)
+{
+    return $this->admin_model->checkToken($token) ? 1 : 0;
+}
+public function delete_cir(){
+    return $this->admin_model->delete_cir() ? 1 : 0;
+}
 
-    public function generatepdf(){
-        $data['name'] =  $_GET['name'];
-        $data['type'] = $_GET['type'];
-        $data['qty'] = $_GET['qty'];
-        $data['price'] = $_GET['price'];
-        $data['email'] = $_GET['email'];
-        $data['contact'] = $_GET['contact'];
-        $data['note'] = $_GET['note'];
+public function generatepdf(){
+    $data['name'] =  $_GET['name'];
+    $data['type'] = $_GET['type'];
+    $data['qty'] = $_GET['qty'];
+    $data['price'] = $_GET['price'];
+    $data['email'] = $_GET['email'];
+    $data['contact'] = $_GET['contact'];
+    $data['note'] = $_GET['note'];
 
-        $mpdf = new \Mpdf\Mpdf();
-        $final = $this->load->view('admin/quotation',$data,true);
-        $mpdf->AddPage('P');
-        $mpdf->WriteHTML($final);
+    $mpdf = new \Mpdf\Mpdf();
+    $final = $this->load->view('admin/quotation',$data,true);
+    $mpdf->AddPage('P');
+    $mpdf->WriteHTML($final);
 
-        $mpdf->Output('Quotation.pdf', 'I');
+    $mpdf->Output('Quotation.pdf', 'I');
 
-       if($_GET['sendEmail'] == 1){
+    if($_GET['sendEmail'] == 1){
 
         $content = $mpdf->Output('', 'S'); 
 
@@ -420,15 +420,15 @@ class Admin extends CI_Controller
         }
 
         $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
-            ->setUsername($_ENV['MAIL_USERNAME'])
-            ->setPassword($_ENV['MAIL_PASSWORD']);
+        ->setUsername($_ENV['MAIL_USERNAME'])
+        ->setPassword($_ENV['MAIL_PASSWORD']);
 
         // Create the Mailer using your created Transport
         $mailer = new Swift_Mailer($transport);
 
         // Send the created message
         $isSent = $mailer->send($message);      
-       }
-  
     }
+    
+}
 }
