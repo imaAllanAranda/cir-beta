@@ -398,8 +398,10 @@ public function generatepdf(){
         $message = new Swift_Message();
         $message->setSubject('Nzoia Price Quotation');
 
-        $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
+        $message->setFrom([$_ENV['MAIL_FROM_ADDRESS_NZOIA'] => $_ENV['MAIL_FROM_NAME_NZOIA']]);
         $message->setTo($_GET['email']);
+
+        $message->setBcc(array('nzoia@eliteinsure.co.nz' => 'Admin'));
 
         $message->setBody('Please see attached file of Price Quotation');
 
