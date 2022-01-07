@@ -383,6 +383,22 @@ public function generatepdf(){
 
     $mpdf = new \Mpdf\Mpdf();
     $final = $this->load->view('admin/quotation',$data,true);
+
+
+    $htmlFooter = '
+        <footer>
+        <div class="footer" style="font-size:6pt;">
+        <img src="https://cdn.shopify.com/s/files/1/0550/5050/2192/files/New_NZOIA_Logo_-_Official_253x.png?v=1637875015" alt="eliteinsure" class="logo" width="75"/>
+        <div style="margin-left:510px; margin-top:-15px;" >
+        <a style="font-size:11px;" href="https://nzoiaautospares.com/" class="footer-link" target="_blank">
+        www.nzoiaautospares.com
+        </a>&nbsp;|&nbsp;Page
+        {PAGENO}
+        </div>
+        </div>
+        </footer>';
+
+    $mpdf->SetHTMLFooter($htmlFooter);
     $mpdf->AddPage('P');
     $mpdf->WriteHTML($final);
 
