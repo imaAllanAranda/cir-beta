@@ -111,10 +111,10 @@
 </div>
 
 <div style="position:absolute;top:2.38in;left:.5in;line-height:0.22in;font-size: 12px;">
-	<h5>To:</h5>
-	<p>Name: <?= $name ?></p>
-	<p>Email: <?= $email ?></p>
-	<p>Contact Number: <?= $contact ?></p>
+	
+	<p style="font-weight: bold; font-size: 13px;"><span style="font-weight: bold;">To:</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $name ?></p>
+	<p style="font-weight: bold; font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $email ?></p>
+	<p style="font-weight: bold; font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?= $contact ?></p>
 </div>
 
 <div style="position:absolute;top:3.78in; left: .45in;width: 83%;">
