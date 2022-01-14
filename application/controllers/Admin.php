@@ -373,6 +373,14 @@ public function delete_cir(){
 }
 
 public function generatepdf(){
+
+    $subject = 'Nzoia Price Quotation';
+    if($_GET['invoice'] == 1){
+       $invoice = $this->admin_model->insertInvoice($_GET['name'],$_GET['email']);
+       $subject = "Nzoia Tax Invoice";
+    }
+
+    $data['invoice_number'] = $invoice;
     $data['name'] =  $_GET['name'];
     $data['type'] = $_GET['type'];
     $data['qty'] = $_GET['qty'];
@@ -380,6 +388,8 @@ public function generatepdf(){
     $data['email'] = $_GET['email'];
     $data['contact'] = $_GET['contact'];
     $data['note'] = $_GET['note'];
+    $data['quoteType'] = $_GET['quoteType'];
+    $data['invoice'] = $_GET['invoice'];
 
     $mpdf = new \Mpdf\Mpdf();
     $final = $this->load->view('admin/quotation',$data,true);
@@ -387,14 +397,14 @@ public function generatepdf(){
 
     $htmlFooter = '
         <footer>
-        <div class="footer" style="font-size:6pt;">
-        <img src="https://cdn.shopify.com/s/files/1/0550/5050/2192/files/New_NZOIA_Logo_-_Official_253x.png?v=1637875015" alt="eliteinsure" class="logo" width="75"/>
-        <div style="margin-left:510px; margin-top:-15px;" >
-        <a style="font-size:11px;" href="https://nzoiaautospares.com/" class="footer-link" target="_blank">
-        www.nzoiaautospares.com
-        </a>&nbsp;|&nbsp;Page
-        {PAGENO}
-        </div>
+        <div  class="footer" style="font-size:6pt; color:white;">
+            <div style="font-size: 11px; z-index: 2;">
+                <p><span style="font-weight:bold; font-size:12px;">NZOIA Auto Spares Ltd</span>.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><a style="z-index: 2; font-size:11px; font-weight:normal;" href="https://nzoiaautospares.com/" class="footer-link" target="_blank">
+                www.nzoiaautospares.com
+                </a>&nbsp;|&nbsp;Page {PAGENO}</span></p>
+            </div>
+            <div >
+            </div>  
         </div>
         </footer>';
 
@@ -408,18 +418,18 @@ public function generatepdf(){
 
         $content = $mpdf->Output('', 'S'); 
 
-        $attachment = (new Swift_Attachment($content, 'Nzoia Price Quotation', 'application/pdf'));
+        $attachment = (new Swift_Attachment($content, $subject, 'application/pdf'));
 
 
         $message = new Swift_Message();
-        $message->setSubject('Nzoia Price Quotation');
+        $message->setSubject($subject);
 
         $message->setFrom([$_ENV['MAIL_FROM_ADDRESS_NZOIA'] => $_ENV['MAIL_FROM_NAME_NZOIA']]);
         $message->setTo($_GET['email']);
 
         $message->setBcc(array('nzoia@eliteinsure.co.nz' => 'Admin'));
 
-        $message->setBody('Please see attached file of Price Quotation');
+        $message->setBody('Please see attached file');
 
         $message->attach($attachment);
 

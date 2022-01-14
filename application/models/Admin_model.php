@@ -733,5 +733,20 @@ class Admin_model extends CI_Model
 
         return 1;
     }
+    public function insertInvoice($name,$email){
 
+        $this->db->select('*')->from('nzoia_invoice');
+        $getData = $this->db->get();
+        $data = $getData->num_rows();
+        $invoice = $data+1;
+
+        $data = array(
+            'id' => $invoice,
+            'name' => $name,
+            'email' => $email,
+           
+        ); 
+        $res = $this->db->insert('nzoia_invoice', $data);
+        return $invoice;
+    }
 }
