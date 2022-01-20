@@ -181,7 +181,7 @@
 <p>2. Direct Bank Transfer: Nzoia Auto Spares Ltd.  
 A/cno 95860200001731
 Bank of Baroda (K ) Ltd.
-Sarit Centre Branch. NAIROBI Kenya</p>
+Sarit Centre Branch. NAIROBI Kenya. User your invoice # as reference.</p>
 <?php }?>
 </div>
 <br><br><br><br>
