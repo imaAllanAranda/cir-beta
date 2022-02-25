@@ -70,7 +70,7 @@
                                             <?php foreach($cir_list as $cir){ ?>
                                             <tr>
                                                 <td>
-                                                <?= ($_GET['type'] == 0)  ? "IR2021" : "CIR2021" ?><?=$cir['report_number'] ?> 
+                                                <?= ($_GET['type'] == 0)  ? "IR".date('Y', strtotime($cir['send_date'])) : "CIR".date('Y', strtotime($cir['send_date'])) ?><?=$cir['report_number'] ?> 
                                                 </td>
                                                 <td>
                                                     <?=$cir['adv_name'] ?> 

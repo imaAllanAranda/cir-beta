@@ -64,8 +64,8 @@
 
                                         <div class="form-group">
                                             <label class="form-label-lg mb-2" style="font-weight: bold;">Report Number</label><br>
-                                            <label class="form-label-lg" style="font-size: 15px">CIR2021<?=$report_number['report_number'] ?></label>
-                                            <input type="hidden" id="report_number" class="form-control" value="CIR2021<?=$report_number['report_number'] ?>">
+                                            <label class="form-label-lg" style="font-size: 15px">CIR<?= date('Y')?><?=$report_number['report_number'] ?></label>
+                                            <input type="hidden" id="report_number" class="form-control" value="CIR<?= date('Y')?><?=$report_number['report_number'] ?>">
                                         </div> 
                                 <?php } else { ?>
                                         <div class="form-group">
@@ -81,8 +81,8 @@
 
                                         <div class="form-group">
                                             <label class="form-label-lg mb-2" style="font-weight: bold;">Report Number</label><br>
-                                            <label class="form-label-lg" style="font-size: 15px">IR2021<?=$report_number['report_number'] ?></label>
-                                            <input type="hidden" id="report_number" class="form-control" value="IR2021<?=$report_number['report_number'] ?>">
+                                            <label class="form-label-lg" style="font-size: 15px">IR<?= date('Y')?><?=$report_number['report_number'] ?></label>
+                                            <input type="hidden" id="report_number" class="form-control" value="IR<?= date('Y')?><?=$report_number['report_number'] ?>">
                                         </div> 
                                 <?php } ?>
 
@@ -266,9 +266,9 @@
                         var obj = jQuery.parseJSON(res.toString())
                         
                         if($("#type").val() == 1){
-                        text = "CIR2021";
+                        text = "CIR<?= date('Y')?>";
                         }else{
-                            text = "IR2021";
+                            text = "IR<?= date('Y')?>";
                         }
 
                         for(var i=0; i < obj.length; i++){

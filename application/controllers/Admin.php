@@ -318,10 +318,17 @@ class Admin extends CI_Controller
     $data = $query1->row_array();
     $type = $data['type'];
 
+    $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created')->from('ta_cir');
+    $this->db->where('report_number', $_GET['report_number']);
+
+    $getCIR = $this->db->get();
+    $data = $getCIR->row_array();
+    $textReportNum = $data['report_number'];
+    $dataYear = $data['date_created'];
     if($type == 0){
-        $subject = "IR";
+        $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
     }else{
-        $subject = "CIR";
+        $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
     }
 
     $attachment = (new Swift_Attachment($content, $subject, 'application/pdf'));

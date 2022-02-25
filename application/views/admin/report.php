@@ -98,7 +98,7 @@
                                             </tr>
                                             <tr>
                                                 <td style="font-weight: bold;">Report Number</td>
-                                                <td>CIR20210020</td>
+                                                <td>CIR<?= date('Y', strtotime($report_details_cir['send_date'])) ?><?= $_GET['report_number'] ?></td>
                                                 <input type="hidden" id="report_number" value="<?= $_GET['report_number'] ?>">
                                             </tr>
                                             <tr>
@@ -109,7 +109,7 @@
                                                 <td style="font-weight: bold;">Adviser Compliance History</td>
                                                 <td>    <?php if($reportHistory){ ?>
                                         <?php foreach($reportHistory as $rep){ ?>
-                                    <label>CIR2021<?=  $rep['report_number'] ?></label>
+                                    <label>CIR<?=  date('Y', strtotime($rep['send_date'])).$rep['report_number'] ?></label>
                                       <?php } ?>
                                   <?php } ?> </td>
                                             </tr>

@@ -152,19 +152,20 @@ class Admin_model extends CI_Model
 
 
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created')->from('ta_cir');
         $this->db->where('report_number', $uid);
 
         $getCIR = $this->db->get();
         $data = $getCIR->row_array();
         $textReportNum = $data['report_number'];
+        $dataYear = $data['date_created'];
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR2021".$textReportNum.")";
+            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $system = "Incident Report";
         }else{
-            $subject = "CIR";
+            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
             $system = "Compliance Investigation Report";
         }
@@ -210,7 +211,7 @@ class Admin_model extends CI_Model
 
     public function report_details()
     {
-        $this->db->select('*, a.type as systype ')->from('ta_cir a');
+        $this->db->select('*, a.type as systype,lpad(MAX(report_number),4,"0") as report_number_1 ')->from('ta_cir a');
         $this->db->join('advisers b', 'b.id = a.adviser_id', 'left');
         $this->db->where('report_number', $_GET['report_number']);
         $query = $this->db->get();
@@ -282,7 +283,7 @@ class Admin_model extends CI_Model
         $this->db->where('report_number', $report_number);
         $res = $this->db->update('ta_cir', $data);
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created')->from('ta_cir');
         $this->db->where('report_number', $report_number);
 
         $getCIR = $this->db->get();
@@ -290,6 +291,7 @@ class Admin_model extends CI_Model
         $rep_id = $data['representative_id'];
         $textReportNum = $data['report_number'];
         $type = $data['type'];
+        $dataYear = $data['date_created'];
 
         $this->db->select('*')->from('users');
         $this->db->where('id', $rep_id);
@@ -303,16 +305,16 @@ class Admin_model extends CI_Model
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR2021".$textReportNum.")";
+            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
-            $number = "IR2021";
+            $number = "IR".date('Y', strtotime($dataYear));
             $second = 0;
         }else{
             $user = "Adviser";
-            $subject = "CIR";
+            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
-            $number = "CIR2021";
+            $number = "CIR".date('Y', strtotime($dataYear));
             $second = 1;
             $system = "Compliance Investigation Report";
         }
@@ -353,13 +355,15 @@ class Admin_model extends CI_Model
         $this->db->where('report_number', $report_number);
         $res = $this->db->update('ta_cir', $data);
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,adviser_id')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,adviser_id,date_created')->from('ta_cir');
         $this->db->where('report_number', $report_number);
 
         $getCIR = $this->db->get();
         $data = $getCIR->row_array();
         $rep_id = $data['adviser_id'];
         $textReportNum = $data['report_number'];
+        $dataYear = $data['date_created'];
+
 
         $this->db->select('*')->from('advisers');
         $this->db->where('id', $rep_id);
@@ -373,15 +377,15 @@ class Admin_model extends CI_Model
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR2021".$textReportNum.")";
+            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
-            $number = "IR2021";
+            $number = "IR".date('Y', strtotime($dataYear));
         }else{
             $user = "Adviser";
-            $subject = "CIR";
+            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
-            $number = "CIR2021";
+            $number = "CIR".date('Y', strtotime($dataYear));
             $system = "Compliance Investigation Report";
         }
 
@@ -424,13 +428,14 @@ class Admin_model extends CI_Model
         $this->db->where('report_number', $report_number);
         $res = $this->db->update('ta_cir', $data);
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,date_created')->from('ta_cir');
         $this->db->where('report_number', $report_number);
 
         $getCIR = $this->db->get();
         $data = $getCIR->row_array();
         $rep_id = $data['representative_id'];
         $textReportNum = $data['report_number'];
+        $dataYear = $data['date_created'];
 
         $this->db->select('*')->from('users');
         $this->db->where('id', $rep_id);
@@ -444,15 +449,15 @@ class Admin_model extends CI_Model
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR2021".$textReportNum.")";
+            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
-            $number = "IR2021";
+            $number = "IR".date('Y', strtotime($dataYear));
         }else{
             $user = "Adviser";
-            $subject = "CIR";
+            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
-            $number = "CIR2021";
+            $number = "CIR".date('Y', strtotime($dataYear));
             $system = "Compliance Investigation Report";
         }
 
@@ -557,19 +562,19 @@ class Admin_model extends CI_Model
 
         $message->setBody($bodyMessage);
 
-        if ($_ENV['MAIL_BCC']) {
-            $bcc = [];
+        // if ($_ENV['MAIL_BCC']) {
+        //     $bcc = [];
 
-            $mails = explode(';', $_ENV['MAIL_BCC']);
+        //     $mails = explode(';', $_ENV['MAIL_BCC']);
 
-            foreach ($mails as $mail) {
-                $parts = explode(',', $mail);
+        //     foreach ($mails as $mail) {
+        //         $parts = explode(',', $mail);
 
-                $bcc[$parts[0]] = $parts[1];
-            }
+        //         $bcc[$parts[0]] = $parts[1];
+        //     }
 
-            $message->setBcc($bcc);
-        }
+        //     $message->setBcc($bcc);
+        // }
 
         $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
         ->setUsername($_ENV['MAIL_USERNAME'])
@@ -609,7 +614,7 @@ class Admin_model extends CI_Model
         $adviser_id = $data['adviser_id'];
         $type = $data['type'];
         
-        $this->db->select('lpad(report_number,4,"0") as report_number')->from('ta_cir');
+        $this->db->select('lpad(report_number,4,"0") as report_number,send_date')->from('ta_cir');
         $this->db->where('adviser_id', $adviser_id);
         $this->db->where('report_number !=', $_GET['report_number']);
         $this->db->where('type', $type);

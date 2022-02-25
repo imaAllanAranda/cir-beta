@@ -28,7 +28,7 @@
   float: left;
   width: 47%;
   padding: 10px;
-  height: 300px;
+  height: 100px;
 }
 
 .row:after {
@@ -79,10 +79,7 @@ img {
 <div class="response">
 <label style="text-align: center;"><?= $report_details_cir['adv_response']?></label><br><br><br>
 
-<p>DECLARATION: I declare that the information on this report is a true representation to the 
-best of my recollection of the facts or events in relation to the matter being investigated. I 
-understand that providing incorrect or incomplete information on this document could result 
-in the review of my Contractual Agreement with Eliteinsure Limited</p><br><br>
+
 </div>
 <div class="row"><br><br><br><br>
   <div class="column">
@@ -93,7 +90,10 @@ in the review of my Contractual Agreement with Eliteinsure Limited</p><br><br>
     <div style="margin-top: -20px; margin-left: 100px;"><?= date('d-m-Y', strtotime($report_details_cir['adv_response_date'])) ?></div>
   </div>
 </div>
-
+<p>DECLARATION: I declare that the information on this report is a true representation to the 
+best of my recollection of the facts or events in relation to the matter being investigated. I 
+understand that providing incorrect or incomplete information on this document could result 
+in the review of my Contractual Agreement with Eliteinsure Limited</p><br><br>
 </body>
 </html>
 	

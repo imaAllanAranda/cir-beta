@@ -120,9 +120,9 @@
                                         <tr>
                                             <td style="font-weight: bold;">Report Number</td>
                                             <td><?php if($_GET['type'] == 1){?>
-                                                CIR2021<?=$cir_max['report_number'] ?></td>
+                                                CIR<?= date('Y', strtotime($report_details_cir['send_date'])) ?><?=$cir_max['report_number'] ?></td>
                                             <?php } else { ?>
-                                                IR2021<?=$cir_max['report_number'] ?></td>
+                                                IR<?= date('Y', strtotime($report_details_cir['send_date'])) ?><?=$cir_max['report_number'] ?></td>
                                             <?php } ?>
                                             <input type="hidden" id="report_number" value="<?= $_GET['report_number'] ?>">
                                             <input type="hidden" id="type" value="<?= $_GET['type'] ?>">
@@ -142,9 +142,9 @@
                                                     $history = "";?>
                                                     <?php foreach($reportHistory as $rep){
                                                         if($_GET['type'] == 1){
-                                                            $text = "CIR2021";
+                                                            $text = "CIR".date('Y', strtotime($rep['send_date']));
                                                         }else{
-                                                            $text = "IR2021";
+                                                            $text = "IR".date('Y', strtotime($rep['send_date']));
                                                         }
                                                         $history .= $text . $rep['report_number'] . ', '
                                                         ?>

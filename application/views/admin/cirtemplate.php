@@ -68,7 +68,7 @@
   </tr>
   <tr>
     <td width="250px">Report Number</td>
-    <td><?= ($report_details_cir['systype'] == 0)  ? 'IR2021' : 'CIR2021' ?><?= $cir_max['report_number'] ?></td>
+    <td><?= ($report_details_cir['systype'] == 0)  ? 'IR'.date('Y', strtotime($report_details_cir['send_date'])) : 'CIR'. date('Y', strtotime($report_details_cir['send_date']))?><?= $report_details_cir['report_number_1'] ?></td>
   </tr>
   <tr style="background-color: #c0e1fa;">
     <td width="250px">Date Sent & Due</td>
@@ -82,7 +82,7 @@
     	 <?php if($reportHistory){
             $history = "";?>
             <?php foreach($reportHistory as $rep){
-                 $history .= ($report_details_cir['systype'] == 0)  ? 'IR2021'.$rep['report_number'].',' : 'CIR2021'.$rep['report_number'].','
+                 $history .= ($report_details_cir['systype'] == 0)  ? 'IR'.date('Y', strtotime($rep['send_date'])).$rep['report_number'].',' : 'CIR'.date('Y', strtotime($rep['send_date'])).$rep['report_number'].','
               ?>
             <?php } ?>
         <?php } ?> 
