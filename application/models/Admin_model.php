@@ -164,14 +164,25 @@ class Admin_model extends CI_Model
             $text = "";
             $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $system = "Incident Report";
+            $info['text'] = $text;
+            $info['system'] = $system;
+
         }else{
             $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
             $system = "Compliance Investigation Report";
+            $info['text'] = $text;
+            $info['system'] = $system;
         }
 
 
         $link = base_url() . 'admin/provide_password?report_number=' . $uid . '&user_type=1&type=' .$type;
+        
+        $info['adviser_name'] = $adviser_name;
+        $info['link'] = $link;
+        $info['password'] = $link_password;
+        $info['step'] = 1;
+        $info['type'] = $type;
 
         $bodyMessage = '
         Hi '.$text.' ' . $adviser_name . ',
@@ -185,6 +196,9 @@ class Admin_model extends CI_Model
         Link Password: ' . $link_password . '
 
         Eliteinsure Admin Team';
+
+        $bodyMessage = $this->load->view('admin/email_template',$info,true);
+
 
         $this->sendEmail($subject, $email, $link_password, $link, $adviser_name, $bodyMessage);
 
@@ -310,6 +324,9 @@ class Admin_model extends CI_Model
             $user = "Contractor/Employee";
             $number = "IR".date('Y', strtotime($dataYear));
             $second = 0;
+            $info['user'] = $user;
+            $info['number'] = $number;
+
         }else{
             $user = "Adviser";
             $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
@@ -317,10 +334,16 @@ class Admin_model extends CI_Model
             $number = "CIR".date('Y', strtotime($dataYear));
             $second = 1;
             $system = "Compliance Investigation Report";
+            $info['user'] = $user;
+            $info['number'] = $number;
         }
 
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
 
+        $info['textReportNum'] = $textReportNum;
+        $info['link'] = $link;
+        $info['step'] = 2;
+        $info['type'] = $type;
         $bodyMessage = '
         Dear Eliteinsure Representative,
 
@@ -329,6 +352,9 @@ class Admin_model extends CI_Model
         ' . $link . '
 
         Eliteinsure Admin Team';
+
+        $bodyMessage = $this->load->view('admin/email_template',$info,true);
+
 
         $this->sendEmail($subject,$email, '', $link, $adviser_name, $bodyMessage);
 
@@ -381,17 +407,26 @@ class Admin_model extends CI_Model
             $system = "Incident Report";
             $user = "Contractor/Employee";
             $number = "IR".date('Y', strtotime($dataYear));
+            $info['system'] = $system;
+            $info['number'] = $number;
         }else{
             $user = "Adviser";
             $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
             $number = "CIR".date('Y', strtotime($dataYear));
             $system = "Compliance Investigation Report";
+            $info['system'] = $system;
+            $info['number'] = $number;
         }
-
 
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=1&type='.$type;
 
+        $info['textReportNum'] = $textReportNum;
+        $info['link'] = $link;
+        $info['password'] = $link_password;
+        $info['step'] = 3;
+        $info['adviser_name'] = $adviser_name;
+        $info['type'] = $type;
         $bodyMessage = '
         Dear '.$adviser_name.',
         
@@ -402,6 +437,8 @@ class Admin_model extends CI_Model
         Link Password: ' . $link_password . '
 
         Eliteinsure Admin Team';
+
+        $bodyMessage = $this->load->view('admin/email_template',$info,true);
 
         $this->sendEmail($subject,$email, $link_password, $link, $adviser_name, $bodyMessage);
 
@@ -446,23 +483,31 @@ class Admin_model extends CI_Model
 
         $email = $data['email'];
         $adviser_name = $data['name'];
-
+        $info['type'] = $type;
         if($type == 0){
             $text = "";
             $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
             $number = "IR".date('Y', strtotime($dataYear));
+            $info['user'] = $user;
+            $info['number'] = $number;
         }else{
             $user = "Adviser";
             $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
             $text = "adviser";
             $number = "CIR".date('Y', strtotime($dataYear));
             $system = "Compliance Investigation Report";
+            $info['user'] = $user;
+            $info['number'] = $number;
         }
 
 
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
+
+        $info['textReportNum'] = $textReportNum;
+        $info['link'] = $link;
+        $info['step'] = 4;
 
         $bodyMessage = '
         Dear Eliteinsure Representative,
@@ -472,6 +517,9 @@ class Admin_model extends CI_Model
         ' . $link . '
 
         Eliteinsure Admin Team';
+
+        $bodyMessage = $this->load->view('admin/email_template',$info,true);
+
 
         $this->sendEmail($subject,$email, '', $link, $adviser_name, $bodyMessage);
 
@@ -558,23 +606,11 @@ class Admin_model extends CI_Model
         $message->setSubject($subject);
 
         $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
-        $message->setTo($email);
+        $message->setTo('allan@eliteinsure.co.nz');
 
         $message->setBody($bodyMessage);
 
-        // if ($_ENV['MAIL_BCC']) {
-        //     $bcc = [];
-
-        //     $mails = explode(';', $_ENV['MAIL_BCC']);
-
-        //     foreach ($mails as $mail) {
-        //         $parts = explode(',', $mail);
-
-        //         $bcc[$parts[0]] = $parts[1];
-        //     }
-
-        //     $message->setBcc($bcc);
-        // }
+       $message->setContentType("text/html");
 
         $transport = (new Swift_SmtpTransport($_ENV['MAIL_HOST'], $_ENV['MAIL_PORT']))
         ->setUsername($_ENV['MAIL_USERNAME'])

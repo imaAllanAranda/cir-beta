@@ -326,23 +326,31 @@ class Admin extends CI_Controller
     $textReportNum = $data['report_number'];
     $dataYear = $data['date_created'];
     if($type == 0){
-        $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
+        $subject = "Final Report for Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
     }else{
-        $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
+        $subject = "Final Report for Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
     }
 
     $attachment = (new Swift_Attachment($content, $subject, 'application/pdf'));
+
+
+    $info['step'] = 5;
+    $info['subject'] = $subject;
+    $info['type'] = $type;
+    $bodyMessage = $this->load->view('admin/email_template',$info,true);
 
 
     $message = new Swift_Message();
     $message->setSubject($subject);
 
     $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
-    $message->setTo('allanaranda4@gmail.com');
+    $message->setTo('jeaniva@eliteinsure.co.nz');
 
-    $message->setBcc(array('allanaranda4@gmail.com' => 'Admin'));
+    //$message->setBcc(array('allanaranda4@gmail.com' => 'Admin'));
 
-    $message->setBody('Please see attached file for '.$subject.'');
+    $message->setBody($bodyMessage);
+
+    $message->setContentType("text/html");
 
     $message->attach($attachment);
 
@@ -463,7 +471,19 @@ public function generatepdf(){
 
         // Send the created message
         $isSent = $mailer->send($message);      
-    }
+        }
     
+    }
+    public function email_template(){
+
+        $data['name'] = 'Allan Aranda';
+        $data['link'] = 'Link';
+        $data['password'] = 'asdsad';
+
+        $this->load->view('admin/email_template',$data);
+    }
 }
-}
+
+
+
+
