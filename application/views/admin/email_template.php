@@ -555,7 +555,7 @@ Eliteinsure Admin Team<br><br>
 
 Dear Eliteinsure Representative,<br><br>
 
-<?= $user?> subject to Report Number <?= $number ?><?= $textReportNum ?> has replied to your questions. Please click the link below to continue the investigation<br><br>
+<?= $user?> subject to Report Number <?= $number ?><?= $textReportNum ?> has replied to your questions. Please click the link below to continue this investigation<br><br>
 
 <a href="<?php echo $link; ?>"><?= ($type == 0) ? 'IR' : 'CIR' ?> Form Link</a><br><br>
 
@@ -578,7 +578,7 @@ Eliteinsure Admin Team<br><br>
 
 Dear Eliteinsure Representative,<br><br>
 
-<?= $user?> subject to Report Number <?= $number ?><?= $textReportNum ?> has replied to your questions. Please click the link below to continue the investigation<br><br>
+<?= $user?> subject to Report Number <?= $number ?><?= $textReportNum ?> has replied to your questions. Please click the link below to continue this investigation<br><br>
 
 <a href="<?php echo $link; ?>"><?= ($type == 0) ? 'IR' : 'CIR' ?> Form Link</a><br><br>
 
