@@ -93,7 +93,7 @@ img {
 <p>DECLARATION: I declare that the information on this report is a true representation to the 
 best of my recollection of the facts or events in relation to the matter being investigated. I 
 understand that providing incorrect or incomplete information on this document could result 
-in the review of my Contractual Agreement with Eliteinsure Limited</p><br><br>
+in the review of my Contractual Agreement with Eliteinsure Limited.</p><br><br>
 </body>
 </html>
 	
