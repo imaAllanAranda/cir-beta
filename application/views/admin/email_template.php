@@ -555,7 +555,7 @@ Eliteinsure Admin Team<br><br>
 
 Dear Eliteinsure Representative,<br><br>
 
-<?= $user?> subject to Report Number <?= $number ?><?= $textReportNum ?> has replied to your questions. Please click the link below to continue this investigation<br><br>
+<?= $user?> subject to Report Number <?= $id_number ?> has replied to your questions. Please click the link below to continue this investigation<br><br>
 
 <a href="<?php echo $link; ?>"><?= ($type == 0) ? 'IR' : 'CIR' ?> Form Link</a><br><br>
 
@@ -565,7 +565,7 @@ Eliteinsure Admin Team<br><br>
 
 Dear <?= $adviser_name ?>,<br><br>
 
-In reference to <?= $system ?> no. <?= $number ?><?= $textReportNum ?> being conducted, please click the link below and provide your response.<br><br>  
+In reference to <?= $system ?> no. <?= $id_number ?> being conducted, please click the link below and provide your response.<br><br>  
 
 <a href="<?php echo $link; ?>"><?= ($type == 0) ? 'IR' : 'CIR' ?> Form Link</a><br><br>
 
@@ -578,7 +578,7 @@ Eliteinsure Admin Team<br><br>
 
 Dear Eliteinsure Representative,<br><br>
 
-<?= $user?> subject to Report Number <?= $number ?><?= $textReportNum ?> has replied to your questions. Please click the link below to continue this investigation<br><br>
+<?= $user?> subject to Report Number <?= $id_number ?> has replied to your questions. Please click the link below to continue this investigation<br><br>
 
 <a href="<?php echo $link; ?>"><?= ($type == 0) ? 'IR' : 'CIR' ?> Form Link</a><br><br>
 
@@ -615,7 +615,7 @@ Please see attached file for final report of <?=$subject?>,<br><br>
                                                             font-size: 12px;
                                                             "
                                                             >
-                                                            This e-mail was sent from a CIR on Eliteinsure Register Software.
+                                                            This e-mail was sent from on Eliteinsure Register Software.
                                                           </p>
                                                         </td>
                                                       </tr>

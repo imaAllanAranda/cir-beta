@@ -62,7 +62,7 @@
                                             </select>
                                         </div> 
 
-                                        <div class="form-group">
+                                        <div class="form-group" hidden>
                                             <label class="form-label-lg mb-2" style="font-weight: bold;">Report Number</label><br>
                                             <label class="form-label-lg" style="font-size: 15px">CIR<?= date('Y')?><?=$report_number['report_number'] ?></label>
                                             <input type="hidden" id="report_number" class="form-control" value="CIR<?= date('Y')?><?=$report_number['report_number'] ?>">
@@ -79,7 +79,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group">
+                                        <div class="form-group" hidden>
                                             <label class="form-label-lg mb-2" style="font-weight: bold;">Report Number</label><br>
                                             <label class="form-label-lg" style="font-size: 15px">IR<?= date('Y')?><?=$report_number['report_number'] ?></label>
                                             <input type="hidden" id="report_number" class="form-control" value="IR<?= date('Y')?><?=$report_number['report_number'] ?>">
@@ -272,7 +272,7 @@
                         }
 
                         for(var i=0; i < obj.length; i++){
-                            $(".history").append('<label style="margin-right: 5px;">'+text+obj[i]['report_number']+'</label>')
+                            $(".history").append('<label style="margin-right: 5px;">'+obj[i]['id_number']+'</label>')
                         }
                     }
                });   

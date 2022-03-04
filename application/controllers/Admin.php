@@ -318,17 +318,19 @@ class Admin extends CI_Controller
     $data = $query1->row_array();
     $type = $data['type'];
 
-    $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created')->from('ta_cir');
+    $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created,id_number')->from('ta_cir');
     $this->db->where('report_number', $_GET['report_number']);
 
     $getCIR = $this->db->get();
     $data = $getCIR->row_array();
     $textReportNum = $data['report_number'];
     $dataYear = $data['date_created'];
+    $id_number = $data['id_number'];
+
     if($type == 0){
-        $subject = "Final Report for Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
+        $subject = "Final Report for Incident Report(".$id_number.")";
     }else{
-        $subject = "Final Report for Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
+        $subject = "Final Report for Compliance Investigation Report(".$id_number.")";
     }
 
     $attachment = (new Swift_Attachment($content, $subject, 'application/pdf'));
@@ -344,7 +346,7 @@ class Admin extends CI_Controller
     $message->setSubject($subject);
 
     $message->setFrom([$_ENV['MAIL_FROM_ADDRESS'] => $_ENV['MAIL_FROM_NAME']]);
-    $message->setTo('jeaniva@eliteinsure.co.nz');
+    $message->setTo('allan@eliteinsure.co.nz');
 
     //$message->setBcc(array('allanaranda4@gmail.com' => 'Admin'));
 

@@ -23,7 +23,7 @@ class Admin_model extends CI_Model
         $status = $_GET['status'];
         $type = $_GET['type'];
 
-        $this->db->select('*,lpad(a.report_number,4,"0") as report_numbers,a.status as cir_status')->from('ta_cir a');
+        $this->db->select('*,lpad(a.report_number,4,"0") as report_numbers,a.status as cir_status,a.id_number')->from('ta_cir a');
         $this->db->join('advisers b', 'b.id = a.adviser_id', 'left');
         $this->db->where('a.type', $type);
 
@@ -122,6 +122,23 @@ class Admin_model extends CI_Model
         $token = $this->input->post('token');
         $type = $this->input->post('type');
 
+        $year = date('Y');
+
+        $last_count = $this->count_report_year($year,$type);
+        $padded_id = sprintf("%04d", $last_count);
+
+        if($type == 0){
+            $idnum = 'IR';
+        }else{
+            $idnum = 'CIR';
+        }
+
+        $id_number = $idnum.$year.$padded_id;
+
+        $data = array('id_number' => $id_number);
+        $this->db->where('report_number', $uid);
+        $res = $this->db->update('ta_cir', $data);
+
         $issue_address = $this->input->post('issue_address');
 
         foreach ($issue_address as $value) {
@@ -162,13 +179,13 @@ class Admin_model extends CI_Model
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Incident Report(".$id_number.")";
             $system = "Incident Report";
             $info['text'] = $text;
             $info['system'] = $system;
 
         }else{
-            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Compliance Investigation Report(".$id_number.")";
             $text = "adviser";
             $system = "Compliance Investigation Report";
             $info['text'] = $text;
@@ -225,7 +242,7 @@ class Admin_model extends CI_Model
 
     public function report_details()
     {
-        $this->db->select('*, a.type as systype,lpad(MAX(report_number),4,"0") as report_number_1 ')->from('ta_cir a');
+        $this->db->select('*, a.type as systype,lpad(MAX(report_number),4,"0") as report_number_1,a.id_number ')->from('ta_cir a');
         $this->db->join('advisers b', 'b.id = a.adviser_id', 'left');
         $this->db->where('report_number', $_GET['report_number']);
         $query = $this->db->get();
@@ -297,13 +314,14 @@ class Admin_model extends CI_Model
         $this->db->where('report_number', $report_number);
         $res = $this->db->update('ta_cir', $data);
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,type,date_created,id_number')->from('ta_cir');
         $this->db->where('report_number', $report_number);
 
         $getCIR = $this->db->get();
         $data = $getCIR->row_array();
         $rep_id = $data['representative_id'];
         $textReportNum = $data['report_number'];
+        $id_number = $data['id_number'];
         $type = $data['type'];
         $dataYear = $data['date_created'];
 
@@ -319,7 +337,7 @@ class Admin_model extends CI_Model
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Incident Report(".$id_number.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
             $number = "IR".date('Y', strtotime($dataYear));
@@ -329,7 +347,7 @@ class Admin_model extends CI_Model
 
         }else{
             $user = "Adviser";
-            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Compliance Investigation Report(".$id_number.")";
             $text = "adviser";
             $number = "CIR".date('Y', strtotime($dataYear));
             $second = 1;
@@ -341,13 +359,14 @@ class Admin_model extends CI_Model
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
 
         $info['textReportNum'] = $textReportNum;
+        $info['id_number'] = $id_number;
         $info['link'] = $link;
         $info['step'] = 2;
         $info['type'] = $type;
         $bodyMessage = '
         Dear Eliteinsure Representative,
 
-        '.$user.' subject to Report Number '.$number.'' . $textReportNum . ' has replied to your questions. Please click the link below to continue the investigation. 
+        '.$user.' subject to Report Number '. $id_number . ' has replied to your questions. Please click the link below to continue the investigation. 
 
         ' . $link . '
 
@@ -381,7 +400,7 @@ class Admin_model extends CI_Model
         $this->db->where('report_number', $report_number);
         $res = $this->db->update('ta_cir', $data);
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,adviser_id,date_created')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,adviser_id,date_created,id_number')->from('ta_cir');
         $this->db->where('report_number', $report_number);
 
         $getCIR = $this->db->get();
@@ -389,7 +408,7 @@ class Admin_model extends CI_Model
         $rep_id = $data['adviser_id'];
         $textReportNum = $data['report_number'];
         $dataYear = $data['date_created'];
-
+        $id_number = $data['id_number'];
 
         $this->db->select('*')->from('advisers');
         $this->db->where('id', $rep_id);
@@ -403,7 +422,7 @@ class Admin_model extends CI_Model
 
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Incident Report(".$id_number.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
             $number = "IR".date('Y', strtotime($dataYear));
@@ -411,7 +430,7 @@ class Admin_model extends CI_Model
             $info['number'] = $number;
         }else{
             $user = "Adviser";
-            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Compliance Investigation Report(".$id_number.")";
             $text = "adviser";
             $number = "CIR".date('Y', strtotime($dataYear));
             $system = "Compliance Investigation Report";
@@ -422,6 +441,7 @@ class Admin_model extends CI_Model
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=1&type='.$type;
 
         $info['textReportNum'] = $textReportNum;
+        $info['id_number'] = $id_number;
         $info['link'] = $link;
         $info['password'] = $link_password;
         $info['step'] = 3;
@@ -430,7 +450,7 @@ class Admin_model extends CI_Model
         $bodyMessage = '
         Dear '.$adviser_name.',
         
-        In reference to '.$system.' no. '.$number.'' . $textReportNum . ' being conducted, please click the link below and provide your response.  
+        In reference to '.$system.' no. '.$id_number . ' being conducted, please click the link below and provide your response.  
 
         ' . $link . '
 
@@ -465,7 +485,7 @@ class Admin_model extends CI_Model
         $this->db->where('report_number', $report_number);
         $res = $this->db->update('ta_cir', $data);
 
-        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,date_created')->from('ta_cir');
+        $this->db->select('lpad(MAX(report_number),4,"0") as report_number,representative_id,date_created,id_number')->from('ta_cir');
         $this->db->where('report_number', $report_number);
 
         $getCIR = $this->db->get();
@@ -473,7 +493,7 @@ class Admin_model extends CI_Model
         $rep_id = $data['representative_id'];
         $textReportNum = $data['report_number'];
         $dataYear = $data['date_created'];
-
+        $id_number = $data['id_number'];
         $this->db->select('*')->from('users');
         $this->db->where('id', $rep_id);
 
@@ -486,7 +506,7 @@ class Admin_model extends CI_Model
         $info['type'] = $type;
         if($type == 0){
             $text = "";
-            $subject = "Incident Report(IR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Incident Report(".$id_number.")";
             $system = "Incident Report";
             $user = "Contractor/Employee";
             $number = "IR".date('Y', strtotime($dataYear));
@@ -494,7 +514,7 @@ class Admin_model extends CI_Model
             $info['number'] = $number;
         }else{
             $user = "Adviser";
-            $subject = "Compliance Investigation Report(CIR".date('Y', strtotime($dataYear)).$textReportNum.")";
+            $subject = "Compliance Investigation Report(".$id_number.")";
             $text = "adviser";
             $number = "CIR".date('Y', strtotime($dataYear));
             $system = "Compliance Investigation Report";
@@ -506,13 +526,14 @@ class Admin_model extends CI_Model
         $link = base_url() . 'admin/provide_password?report_number=' . $report_number . '&user_type=0&type='.$type;
 
         $info['textReportNum'] = $textReportNum;
+        $info['id_number'] = $id_number;
         $info['link'] = $link;
         $info['step'] = 4;
 
         $bodyMessage = '
         Dear Eliteinsure Representative,
 
-        '.$user.' subject to Report Number '.$number.'' . $textReportNum . ' has replied to your questions. Please click the link below to continue the investigation. 
+        '.$user.' subject to Report Number '.$id_number. ' has replied to your questions. Please click the link below to continue the investigation. 
 
         ' . $link . '
 
@@ -627,7 +648,7 @@ class Admin_model extends CI_Model
     {
 
 
-        $this->db->select('lpad(report_number,4,"0") as report_number')->from('ta_cir');
+        $this->db->select('lpad(report_number,4,"0") as report_number,id_number')->from('ta_cir');
         $this->db->where('adviser_id', $this->input->post('adviser_id'));
         $this->db->where('type', $this->input->post('type'));
 
@@ -650,7 +671,7 @@ class Admin_model extends CI_Model
         $adviser_id = $data['adviser_id'];
         $type = $data['type'];
         
-        $this->db->select('lpad(report_number,4,"0") as report_number,send_date')->from('ta_cir');
+        $this->db->select('lpad(report_number,4,"0") as report_number,send_date,id_number')->from('ta_cir');
         $this->db->where('adviser_id', $adviser_id);
         $this->db->where('report_number !=', $_GET['report_number']);
         $this->db->where('type', $type);
@@ -682,7 +703,7 @@ class Admin_model extends CI_Model
         $id = $data['tokenable_id'];
         $role = $data['role'];
 
-        $this->db->select('lpad(a.report_number,4,"0") as report_number,a.adviser_id,a.type ,a.send_date,a.due_date,a.representative_id,a.report_number as id,a.status,b.name,c.name as adv_name, a.points')->from('ta_cir a');
+        $this->db->select('lpad(a.report_number,4,"0") as report_number,a.adviser_id,a.type ,a.send_date,a.due_date,a.representative_id,a.report_number as id,a.status,b.name,c.name as adv_name, a.points, a.id_number')->from('ta_cir a');
         $this->db->join('users b', 'b.id = a.representative_id', 'left');
         $this->db->join('advisers c', 'c.id = a.adviser_id', 'left');
         $this->db->where('report_number !=', '0');
@@ -789,5 +810,22 @@ class Admin_model extends CI_Model
         ); 
         $res = $this->db->insert('nzoia_invoice', $data);
         return $invoice;
+    }
+      public function count_report_year($year,$type){
+
+        $this->db->select('*');  
+        $this->db->from('ta_cir');  
+       
+        if($type == 0){
+             $this->db->like('id_number', 'IR','after');
+        }else{
+             $this->db->like('id_number', 'CIR');
+        }
+
+
+        $count = $this->db->get()->num_rows();
+
+        return $count+1;
+
     }
 }

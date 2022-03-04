@@ -119,11 +119,7 @@
                                         </tr>
                                         <tr>
                                             <td style="font-weight: bold;">Report Number</td>
-                                            <td><?php if($_GET['type'] == 1){?>
-                                                CIR<?= date('Y', strtotime($report_details_cir['send_date'])) ?><?=$cir_max['report_number'] ?></td>
-                                            <?php } else { ?>
-                                                IR<?= date('Y', strtotime($report_details_cir['send_date'])) ?><?=$cir_max['report_number'] ?></td>
-                                            <?php } ?>
+                                            <td><?= $report_details_cir['id_number']?>
                                             <input type="hidden" id="report_number" value="<?= $_GET['report_number'] ?>">
                                             <input type="hidden" id="type" value="<?= $_GET['type'] ?>">
                                         </tr>
@@ -136,17 +132,12 @@
                                                 <?php if($_GET['type'] == 1){?>
                                                    Adviser Compliance History
                                                <?php } else { ?>
-                                                Contractor/Employee <br>Incident Report
+                                                Contractor/Employee <br>Incident Report History
                                                 <?php } ?></td>
                                                 <td><?php if($reportHistory){
                                                     $history = "";?>
                                                     <?php foreach($reportHistory as $rep){
-                                                        if($_GET['type'] == 1){
-                                                            $text = "CIR".date('Y', strtotime($rep['send_date']));
-                                                        }else{
-                                                            $text = "IR".date('Y', strtotime($rep['send_date']));
-                                                        }
-                                                        $history .= $text . $rep['report_number'] . ', '
+                                                        $history .= $rep['id_number'] . ', '
                                                         ?>
                                                     <?php } ?>
                                                 <?php } ?> 

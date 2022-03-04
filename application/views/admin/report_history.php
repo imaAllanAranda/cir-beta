@@ -172,7 +172,7 @@
     <?php if($report){ ?>
         <?php foreach($report as $rep){ ?>
             <tr>
-                <td><?= ($_GET['type'] == 0)  ? "IR".date('Y', strtotime($rep['send_date'])) : "CIR".date('Y', strtotime($rep['send_date'])) ?><?=$rep['report_numbers']?></td>  
+                <td><?= $rep['id_number'] ?></td>  
                 <td><?=$rep['name']?></td>
                 <td><?= date('d-m-Y', strtotime($rep['send_date']))?></td>   
                 <td><?= date('d-m-Y', strtotime($rep['due_date'])) ?></td>
